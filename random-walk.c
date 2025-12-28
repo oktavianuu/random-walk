@@ -6,11 +6,22 @@
 #define WIDTH 900
 #define HEIGHT 600
 
-#define SCALE 10;
+int scale = 10;
 
 typedef struct {
     int vx, vy;
 } Velocity;
+
+typedef struct {
+    int x, y;
+    Uint32 rgb;
+} Agent;
+
+void move_agents(SDL_Surface *psurface)
+{
+    Velocity val = get rand_v()
+
+}
 
 Velocity get_rand_v()
 {
@@ -52,8 +63,9 @@ int main(int argcount, const char *argval[])
 
     SDL_Window *pwindow = SDL_CreateWindow("Random Walk", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0); 
     SDL_Surface *psurface = SDL_GetWindowSurface(pwindow);
-
-    SDL_Rect rect = (SDL_Rect) {50, 50, 2, 2};
+    
+    SDL_Rect rect = (SDL_Rect) {WIDTH/2, HEIGHT/2, 2, 2};
+    Agents *pagents = calloc(num_agents, sizeof(Agents));
 
     int app_running = 1;
     while(app_running)
@@ -67,10 +79,14 @@ int main(int argcount, const char *argval[])
             }
         }
 
+        move_agents();
         Velocity vel = get_rand_v();
-        rect.x += vel.vx * SCALE;
-        rect.y += vel.vy * SCALE;
-        SDL_FillRect(psurface, &rect, 0xFFFFFF);
+        for(int i=0; i<scale; i++)
+        {
+            rect.x += vel.vx;
+            rect.y += vel.vy;
+            SDL_FillRect(psurface, &rect, 0xFFFFFF);
+        }
         SDL_UpdateWindowSurface(pwindow);
         SDL_Delay(20);
     }
